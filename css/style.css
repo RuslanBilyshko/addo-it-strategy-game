@@ -1,0 +1,30 @@
+.resource {
+
+
+}
+
+.resource_content_wrapper {
+    display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+    border: #000 solid 1px;
+    height: 100px;
+    text-align: center;
+
+}
+
+.resource_content {
+    width: 100%;
+
+}
+
+#castle {
+    margin: 25px 0;
+}
+
+.btn_wrapper {
+    text-align: center;
+}

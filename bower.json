@@ -1,0 +1,8 @@
+{
+  "name": "Strategy",
+
+
+  "dependencies": {
+    "bootstrap": ">= 3.0.0"
+  }
+}
