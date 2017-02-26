@@ -26,35 +26,26 @@ function innerText(element, text) {
  * @param delay
  * @returns {number}
  */
-function setResource(factory, min, max, delay) {
+function setResource(factory, min, max, delay, castle) {
 
-    return setInterval(function () {
+    setTimeout(function () {
+
         factory.resources += getRandomInt(min, max);
+        castle.resorce += factory.resources;
         innerText(factory.container, factory.resources);
     }, delay);
 }
 
-function removeInterval(interval, delay) {
+function isLevel(sawmill,quarry,gold,level,castle ) {
 
-}
-
-/**
- * Остановка накопления ресурсов
- * @param interval
- * @param factory
- * @param limit
- */
-function removeIntervalControll(interval, factory, limit) {
-    if(factory.resources >= limit)
+    if(sawmill.resources >= level.sawmill &&
+        quarry.resources >= level.quarry &&
+        gold.resources >= level.gold
+    )
     {
-        clearInterval(interval);
-        return true;
+        if(castle.level <= 3)
+            castle.level += 1;
     }
-    else
-        return false;
-
-
-
 }
 
 
@@ -98,64 +89,76 @@ var castle = {
     "resorce": 0
 };
 
+var mess = document.getElementById("message");
 
 
-// 10 15 8
-
-//if(sawmill_resource == 10)
-
-
-var btn_upgrate = document.getElementById("upgrate");
-// btn_upgrate.removeAttribute("disabled");
-// btn_upgrate.setAttribute("disabled", "disabled");
-
-btn_upgrate.onclick = function () {
-
-    innerText(castle.level_container, castle.level);
-    innerText(castle.resource_container, castle.resorce);
-
-    var sawmill_interval = setResource(sawmill,5,8,1000); //10000
-    var quarry_interval = setResource(quarry, 10, 15, 1000); //14000
-    var gold_interval = setResource(gold, 4, 6, 1000); //18000
-
-    this.setAttribute("disabled", "disabled");
-    this.innerText = "Upgrade";
-
-    setInterval(function () {
-
-        if( removeIntervalControll(sawmill_interval,sawmill, 50) &&
-            removeIntervalControll(quarry_interval,quarry, 50) &&
-            removeIntervalControll(gold_interval,gold, 50)
-        )
-        {
-            btn_upgrate.removeAttribute("disabled");
-            castle.level++;
-            castle.resorce = sawmill.resources + quarry.resources + gold.resources;
-        }
-    }, 1000);
-
-
-
+var levels_1 = {
+    "sawmill": 10,
+    "quarry": 8,
+    "gold": 14
 };
 
+var levels_2 = {
+    "sawmill": 15,
+    "quarry": 12,
+    "gold": 20
+};
+
+var levels_3 = {
+    "sawmill": 20,
+    "quarry": 25,
+    "gold": 30
+};
+
+var btn_upgrate = document.getElementById("upgrate");
+
+    btn_upgrate.setAttribute("disabled", "disabled");
+    setResource(sawmill, 5, 8, 1000, castle);
+    setResource(quarry, 10, 15, 2000, castle);
+    setResource(gold, 4, 6, 3000, castle);
+
+    setTimeout(function () {
+
+        mess.innerText = "Ресурсы готовы. Нажмите на кнопку чтобы собрать";
+        btn_upgrate.removeAttribute("disabled");
+
+    }, 3500);
 
 
-  // function hide() {
-  //   var event = new Event("hide", {
-  //     cancelable: true
-  //   });
-  //   if (!rabbit.dispatchEvent(event)) {
-  //     alert( 'действие отменено обработчиком' );
-  //   } else {
-  //     rabbit.hidden = true;
-  //   }
-  // }
-  //
-  // rabbit.addEventListener('hide', function(event) {
-  //   if (confirm("Вызвать preventDefault?")) {
-  //     event.preventDefault();
-  //   }
-  // });
-  //
-  // // прячемся через 2 секунды
-  // setTimeout(hide, 2000);
+btn_upgrate.addEventListener("click", function () {
+
+
+    innerText(castle.resource_container, castle.resorce);
+    mess.innerText = "";
+
+    isLevel(sawmill,quarry,gold,levels_1,castle);
+    isLevel(sawmill,quarry,gold,levels_2,castle);
+    isLevel(sawmill,quarry,gold,levels_3,castle);
+
+    innerText(castle.level_container, castle.level);
+
+    btn_upgrate.setAttribute("disabled", "disabled");
+    setResource(sawmill, 5, 8, 1000, castle);
+    setResource(quarry, 10, 15, 2000, castle);
+    setResource(gold, 4, 6, 3000, castle);
+
+    setTimeout(function () {
+
+        mess.innerText = "Ресурсы готовы. Нажмите на кнопку чтобы собрать";
+        btn_upgrate.removeAttribute("disabled");
+
+    }, 3500);
+
+
+
+
+
+
+    // this.setAttribute("disabled", "disabled");
+    // this.innerText = "Upgrade";
+
+
+
+
+
+});
