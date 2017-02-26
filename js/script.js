@@ -128,6 +128,8 @@ var btn_upgrate = document.getElementById("upgrate");
 btn_upgrate.addEventListener("click", function () {
 
 
+
+
     innerText(castle.resource_container, castle.resorce);
     mess.innerText = "";
 
@@ -138,16 +140,22 @@ btn_upgrate.addEventListener("click", function () {
     innerText(castle.level_container, castle.level);
 
     btn_upgrate.setAttribute("disabled", "disabled");
-    setResource(sawmill, 5, 8, 1000, castle);
-    setResource(quarry, 10, 15, 2000, castle);
-    setResource(gold, 4, 6, 3000, castle);
 
-    setTimeout(function () {
+    if(castle.level < 3)
+    {
+        setResource(sawmill, 5, 8, 1000, castle);
+        setResource(quarry, 10, 15, 2000, castle);
+        setResource(gold, 4, 6, 3000, castle);
+
+        setTimeout(function () {
 
         mess.innerText = "Ресурсы готовы. Нажмите на кнопку чтобы собрать";
         btn_upgrate.removeAttribute("disabled");
 
     }, 3500);
+
+    }
+
 
 
 
